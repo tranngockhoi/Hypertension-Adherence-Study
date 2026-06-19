@@ -112,20 +112,6 @@ The study protocol was reviewed and formally approved by the Institutional Revie
 
 ## Results
 
-```{r setup}
-#| message: false
-#| warning: false
-
-library(dplyr)
-library(tidyr)
-library(forcats)
-library(ggplot2)
-library(scales)
-library(gtsummary)
-library(gt)
-
-```
-
 ### Data Cleaning and Preparation
 
 Before proceeding with the statistical analysis, a data cleaning pipeline was executed to standardize character variables and handle clinical categorical groupings. Specifically, the `Comorbidities` variable (originally recording the raw count of co-existing conditions) was classified into clean, descriptive clinical categories, collapsing any count of 3 or greater into a single tier ("3+ comorbidities").
