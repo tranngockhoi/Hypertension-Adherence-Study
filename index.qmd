@@ -185,7 +185,6 @@ data_clean <- data %>%
     Adherence_Level = factor(Adherence_Level, levels = c("High", "Medium", "Low"))
   ) %>%
   select(-drug_count)
-head(data_clean$Regimen)
 
 ```
 
