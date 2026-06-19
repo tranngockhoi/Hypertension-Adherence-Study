@@ -28,7 +28,7 @@ format:
     page-layout: article
     mainfont: sans-serif
     linestretch: 1.5
-    css: styles.css  # <-- Trỏ trực tiếp đến file css cục bộ để ép độ ưu tiên cao nhất
+    css: styles.css  
 execute:
   eval: true
   warning: false
@@ -45,7 +45,6 @@ execute:
 # the original clinical dataset cannot be shared publicly.
 # The dataset loaded below ("hypertension_mmas8_raw.csv") is a fully de-identified, 
 # synthetically generated dataset that perfectly preserves the exact statistical power, 
-# distributions (n, %), and multivariate odds ratios (OR) of the original study.
 
 data <- read.csv("hypertension_mmas8_raw.csv", stringsAsFactors = TRUE)
 ```
@@ -167,7 +166,7 @@ data_clean <- data %>%
       drug_count == 1 ~ "Monotherapy",
       drug_count == 2 ~ "Dual therapy",
       drug_count >= 3 ~ "Triple+ therapy",
-      TRUE            ~ "No treatment" # Dự phòng trường hợp không ghi nhận thuốc
+      TRUE            ~ "No treatment" 
     ),
     Regimen = factor(
       Regimen, 
@@ -228,7 +227,7 @@ data %>%
 
 The baseline demographic characteristics of the study population (N = 296) are presented in @tbl-demographics. The mean age of the participants was 60.1 pm 12.8 years. In terms of gender distribution, females constituted the majority of the cohort (n = 174, 59%), compared to males (n = 122, 41%). Regarding educational attainment, the largest proportion of patients had an educational level of primary school or lower (n = 124, 42%), followed by lower secondary school (n = 110, 37%), upper secondary school (n = 35, 12), and higher education (n = 27, 9.1%).
 
-#### Ethnicity and Gender Cross-Stratification
+###Ethnicity and Gender Cross-Stratification
 
 Ethnicity is an important socio-cultural factor in regional healthcare. To evaluate if gender distribution remains balanced across different ethnic groups, the following chart visualizes the population structure using a stratified grouped bar design.
 
@@ -243,7 +242,7 @@ Ethnicity is an important socio-cultural factor in regional healthcare. To evalu
 library(ggplot2)
 library(dplyr)
 
-# 1. Tổng hợp dữ liệu phân tầng từ data_clean
+1. Tổng hợp dữ liệu phân tầng từ data_clean
 ethnicity_gender <- data_clean %>%
   count(Ethnicity, Gender) %>%
   group_by(Ethnicity) %>%
@@ -253,11 +252,9 @@ ethnicity_gender <- data_clean %>%
   ) %>%
   ungroup()
 
-# 2. Vẽ biểu đồ phân tầng với hệ màu bổ trợ thống nhất của JAMA
 ggplot(ethnicity_gender, aes(x = Ethnicity, y = percentage, fill = Gender)) +
   geom_col(position = position_dodge(width = 0.75), width = 0.6, alpha = 0.95) +
   
-  # Hiển thị chữ số % tinh tế trên đầu cột
   geom_text(aes(label = label), 
             position = position_dodge(width = 0.75), 
             vjust = -0.6, 
@@ -268,7 +265,6 @@ ggplot(ethnicity_gender, aes(x = Ethnicity, y = percentage, fill = Gender)) +
   scale_y_continuous(labels = scales::percent_format(accuracy = 1),
                      expand = expansion(mult = c(0, 0.15))) +
                      
-  # 🌟 SỬA ĐỒNG BỘ MÀU: Dùng cặp màu bổ trợ chuyên dụng cho giới tính, tránh trùng màu High/Medium/Low
   scale_fill_manual(values = c(
     "Male"   = "#1170AA",  # Clinical Steel Blue
     "Female" = "#FC7D4B"   # Muted Coral
@@ -280,7 +276,6 @@ ggplot(ethnicity_gender, aes(x = Ethnicity, y = percentage, fill = Gender)) +
     fill = "Gender"
   ) +
   
-  # Giữ nguyên Theme cao cấp của JAMA đồng bộ với Hình 3
   theme_classic(base_size = 12) +
   theme(
     axis.line = element_line(color = "#444444", linewidth = 0.5),
@@ -317,31 +312,25 @@ library(ggplot2)
 library(dplyr)
 
 
-# 2. Vẽ biểu đồ Boxplot kết hợp Jitter chuẩn phong cách JAMA
 ggplot(data_clean, aes(x = Gender, y = Birth_Year, fill = Gender)) +
-  # Vẽ hộp với độ trong suốt vừa phải để làm nổi bật các điểm dữ liệu bên dưới
   geom_boxplot(alpha = 0.5, width = 0.35, outlier.shape = NA, color = "#444444", linewidth = 0.6) +
   
-  # Rải các điểm dữ liệu thực tế, dùng chính màu của Gender nhưng hạ alpha để nhìn sang trọng
   geom_jitter(aes(color = Gender), width = 0.12, alpha = 0.35, size = 1.8) +
   
-  # 🌟 ĐỒNG BỘ MÀU CHUẨN JAMA (Khớp hoàn toàn với biểu đồ hình cột trước)
   scale_fill_manual(values = c("Male" = "#1170AA", "Female" = "#FC7D4B")) +
   scale_color_manual(values = c("Male" = "#1170AA", "Female" = "#FC7D4B")) +
   
-  # Nhãn tối giản chuẩn y khoa quốc tế
   labs(
     x = "Gender",
     y = "Age (years)"
   ) +
   
-  # Khung nền Classic tinh giản, loại bỏ lưới dọc, giữ lưới ngang siêu mảnh
   theme_classic(base_size = 12) +
   theme(
     axis.line = element_line(color = "#444444", linewidth = 0.5),
     axis.ticks = element_line(color = "#444444"),
     
-    legend.position = "none", # Tắt legend vì trục X đã phân định rõ Male/Female
+    legend.position = "none",
     
     axis.title.y = element_text(color = "#222222", margin = margin(r = 10)),
     axis.title.x = element_text(color = "#222222", margin = margin(t = 10)),
@@ -406,10 +395,8 @@ This section evaluates the distribution of pharmacological classes, specific dru
 library(tidyverse)
 library(gtsummary)
 
-# 1. Thống kê mô tả chi tiết phác đồ và các hoạt chất thuốc cụ thể
 medication_table <- data_clean %>%
   select(Regimen, ACEI, ARB, CCB, Diuretic, BB, Side_Effects) %>%
-  # Chuyển đổi các giá trị trống hoặc không dùng thành dạng dễ đọc trên bảng
   mutate(across(c(ACEI, ARB, CCB, Diuretic, BB), ~ ifelse(. == "" | is.na(.), "Not Prescribed", .))) %>%
   tbl_summary(
     label = list(
@@ -438,7 +425,6 @@ The therapeutic regimens and medication utilization profiles of the study cohort
 
 library(ggplot2)
 
-# 2. Tính toán tỷ lệ % sử dụng của từng nhóm thuốc để vẽ biểu đồ
 drug_counts <- data_clean %>%
   summarise(
     ACEI = sum(ACEI != "NONE" & !is.na(ACEI)),
@@ -450,7 +436,6 @@ drug_counts <- data_clean %>%
   pivot_longer(cols = everything(), names_to = "Drug_Class", values_to = "Count") %>%
   mutate(Percentage = (Count / nrow(data_clean)) * 100)
 
-# Vẽ biểu đồ thanh ngang sắp xếp theo độ phổ biến
 ggplot(drug_counts, aes(x = reorder(Drug_Class, Percentage), y = Percentage)) +
   geom_col(fill = "steelblue", width = 0.6) +
   geom_text(aes(label = sprintf("%.1f%%", Percentage)), hjust = -0.1, size = 4) +
@@ -483,7 +468,6 @@ This section details the frequencies and percentages of patient responses ("Yes"
 library(gtsummary)
 library(tidyverse)
 
-# 1. Bảng hiển thị đầy đủ cả 2 cột Yes và No cho từng câu hỏi Mas
 mmas_items_table <- data_clean %>%
   select(Mas1, Mas2, Mas3, Mas4, Mas5, Mas6, Mas7, Mas8) %>%
   tbl_summary(
@@ -497,7 +481,7 @@ mmas_items_table <- data_clean %>%
       Mas7 ~ "Q7. Feel pressured about sticking to treatment plan?",
       Mas8 ~ "Q8. Difficulty remembering to take all medicine?"
     ),
-    type = all_categorical() ~ "categorical", # Ép hiển thị đầy đủ các nhóm danh định
+    type = all_categorical() ~ "categorical", 
     statistic = all_categorical() ~ "{n} ({p}%)"
   )
 
@@ -517,7 +501,6 @@ Based on the cumulative scores of the MMAS-8 instrument, patients were stratifie
 #| echo: true
 #| tbl-cap: "DSummary of Continuous MMAS-8 Scores and Categorified Adherence Levels (N = 296)"
 
-# 2. Bảng hiển thị riêng tổng điểm và phân độ tuân thủ
 adherence_summary_table <- data_clean %>%
   select(MMAS_Score, Adherence_Level) %>%
   tbl_summary(
@@ -545,44 +528,35 @@ The distribution of total MMAS-8 scores and the categorized overall medication a
 #| fig-cap: "Proportional distribution of medication adherence tiers aligned with JAMA visual style standards."
 
 
-# Trực quan hóa 3 nhóm theo chuẩn đồ họa tạp chí JAMA
 ggplot(data_clean, aes(x = Adherence_Level, fill = Adherence_Level)) +
-  # Vẽ cột thanh lịch, hơi mảnh một chút (width = 0.45)
   geom_bar(aes(y = (..count..)/sum(..count..) * 100), width = 0.45, show.legend = FALSE) +
   
-  # Hiển thị số % tinh tế ngay trên đầu cột, sử dụng size vừa phải, màu xám đen sang trọng
   geom_text(aes(y = (..count..)/sum(..count..) * 100, 
                 label = sprintf("%.1f%%", (..count..)/sum(..count..) * 100)), 
             stat = "count", vjust = -0.6, size = 4, color = "#222222", fontface = "plain") +
   
-  # 🌟 ÁP DỤNG PALETTE MÀU CHUẨN CỦA TẠP CHÍ JAMA (Muted & Academic)
   scale_fill_manual(values = c(
     "High"   = "#374E55",  # Muted Dark Slate Blue
     "Medium" = "#DF8F44",  # Muted Amber/Orange
     "Low"    = "#B24745"   # Muted Deep Red
   )) +
-  
-  # Nhãn tối giản, không viết hoa toàn bộ bừa bãi
+
   labs(
     x = "Medication adherence level",
     y = "Percentage (%)"
   ) +
-  
-  # Thiết lập giới hạn trục Y thoáng hơn một chút để không bị cụt chữ số %
+
   scale_y_continuous(limits = c(0, 100), breaks = seq(0, 100, 20)) +
-  
-  # Tùy biến Theme cao cấp (Bỏ khung, bỏ lưới dọc, lưới ngang siêu mảnh)
+
   theme_classic(base_size = 12) +
   theme(
     axis.line = element_line(color = "#444444", linewidth = 0.5),
     axis.ticks = element_line(color = "#444444"),
     axis.title = element_text(color = "#222222"),
     axis.text = element_text(color = "#333333"),
-    
-    # Tạo đường lưới ngang mảnh (màu xám rất nhạt) đúng style báo cáo chuyên sâu
+
     panel.grid.major.y = element_line(color = "#EAEAEA", linewidth = 0.5),
-    
-    # Khối đệm xung quanh đồ thị
+
     plot.margin = margin(t = 15, r = 15, b = 10, l = 10, unit = "pt")
   )
 ```
