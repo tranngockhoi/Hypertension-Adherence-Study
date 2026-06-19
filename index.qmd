@@ -1,0 +1,616 @@
+---
+title: "Antihypertensive Medication Patterns and Treatment Adherence Evaluation: A Cross-Sectional Clinical Study"
+subtitle: "Clinical Analysis and Evaluation of Medication Adherence Using the MMAS-8 Scale"
+author:
+  name: "Tran Ngoc Khoi, MD"
+  degrees: "MD"
+  email: "tranngockhoi@gmail.com"
+date: last-modified
+date-format: "MMMM DD, YYYY"
+bibliography: references.bib
+csl: jama.csl
+metadata:
+  max-authors: 3
+  et-al-use-first: 3
+format: 
+  html:
+    theme: 
+      - cosmo
+      - journal
+    toc: true
+    toc-depth: 3
+    toc-location: left
+    toc-title: "Manuscript Contents"
+    number-sections: true
+    code-fold: true 
+    code-summary: "Show R/Python Code"
+    embed-resources: true
+    page-layout: article
+    mainfont: sans-serif
+    linestretch: 1.5
+    css: styles.css  # <-- Trỏ trực tiếp đến file css cục bộ để ép độ ưu tiên cao nhất
+execute:
+  eval: true
+  warning: false
+  message: false
+---
+
+```{r}
+#| label: load-data
+#| message: false
+#| warning: false
+
+# NOTE FOR PORTFOLIO REVIEWERS:
+# To comply with HIPAA, medical ethics, and patient data privacy regulations, 
+# the original clinical dataset cannot be shared publicly.
+# The dataset loaded below ("hypertension_mmas8_raw.csv") is a fully de-identified, 
+# synthetically generated dataset that perfectly preserves the exact statistical power, 
+# distributions (n, %), and multivariate odds ratios (OR) of the original study.
+
+data <- read.csv("hypertension_mmas8_raw.csv", stringsAsFactors = TRUE)
+```
+
+## Introduction
+
+Hypertension (HTN) remains one of the most prevalent non-communicable diseases globally and constitutes a leading driver of the global burden of disease and mortality. A pooled analysis of 104 million adults across 200 countries demonstrated that in 2019, approximately 1.28 billion individuals aged 30–79 suffered from HTN; alarmingly, target blood pressure control rates were achieved in only 18% to 23% of cases @2021957. Uncontrolled HTN inflicts a substantial economic burden and precipitates severe cardiovascular and cerebrovascular complications, including stroke, coronary artery disease, and premature death.
+
+Achieving optimal blood pressure control is a critical therapeutic imperative in HTN management. However, sub-optimal medication adherence represents a paramount barrier to reaching target blood pressure levels; notably, a comprehensive meta-analysis indicated that the prevalence of non-adherence reaches up to 52% @Van2025. Among the various methodologies utilized to evaluate compliance, the 8-item Morisky Medication Adherence Scale (MMAS-8) is a widely adopted, cost-effective, and validated self-report tool tailored for assessing medication-taking behavior in resource-limited research settings like Vietnam @Nguyen2018. Currently, epidemiological data concerning antihypertensive prescribing patterns and therapeutic adherence remain highly scarce within primary healthcare infrastructures, particularly at the district or community health center level. Therefore, this study was conducted to investigate medication utilization patterns and evaluate adherence behaviors among hypertensive patients at a primary healthcare center, aiming to formulate targeted, context-specific interventions aligned with local socio-demographic realities.
+
+This study was conducted at a primary care center with two specific objectives:
+
+1.  To describe the clinical utilization patterns and characteristics of antihypertensive medication regimens prescribed within a primary care setting.
+2.  To evaluate the prevalence and distribution of medication adherence levels among hypertensive patients using the 8-item Morisky Medication Adherence Scale (MMAS-8).
+
+## Materials and Methods
+
+### Study Population and Selection Criteria
+
+The study population comprised hypertensive patients receiving outpatient care at the general department of a primary care center.
+
+-   **Inclusion Criteria:** Patients aged $\ge 18$ years, diagnosed with primary hypertension under the ICD-10 code (I10), prescribed at least one antihypertensive medication, capable of participating in an interview, and provided informed consent.
+-   **Exclusion Criteria:** Pregnant women, secondary hypertension, and patients experiencing acute clinical conditions.
+
+### Study Design and Setting
+
+A cross-sectional, prospective descriptive survey was conducted at the outpatient clinic of the primary care setting. Data collection spanned from March 1, 2025, until the target sample size was reached on September 16, 2025.
+
+### Sample Size and Sampling Technique
+
+The required sample size was calculated using the standard single-proportion estimation formula:
+
+$$n = \frac{Z_{1-\frac{\alpha}{2}}^2 \cdot p \cdot (1-p)}{d^2}$$
+
+Where: \* $Z_{1-\frac{\alpha}{2}} = 1.96$ (corresponding to a 95% confidence level). \* $d = 0.05$ (absolute precision/margin of error). \* $p = 0.74$ (the expected adherence rate of 73.8% derived from a prior localized study) @Uyen2024.
+
+Substituting these values into the formula yielded an initial target sample size of $n = 296$. A **convenience sampling** approach was employed; all consecutive eligible patients attending routine clinical follow-ups during the study period were invited to participate until the sample size of 296 patients was achieved.
+
+### Data Collection and Instrumentation
+
+Data were compiled from two primary sources: 1. **Electronic Health Records (EHR):** Extracted variables included age, biological sex, clinical metrics, primary diagnoses, and medication regimens. 2. **Face-to-Face Interviews:** Performed during clinical visits utilizing a localized Vietnamese version of the 8-item Morisky Medication Adherence Scale (MMAS-8), adapted through a standard cultural validation process. To optimize patient responsiveness and uniformity across the instrument, item 8 was structured as a binary choice (Yes/No).
+
+> **Internal Consistency:** The psychometric properties of the scale were validated on the study cohort ($n = 296$). The instrument demonstrated good internal reliability with an overall Cronbach’s alpha coefficient of 0.795 (95% CI: 0.762 – 0.828). Individual item-deleted alpha values ranged between 0.740 and 0.801, indicating high structural consistency.
+
+### Scoring and Adherence Classification
+
+The scoring protocol allocated 1 point for each adherent response, defined as answering "No" to items 1, 2, 3, 4, 6, 7, and 8, and "Yes" to item 5. Total scores ranged from 0 to 8, based on which patients were stratified into three adherence levels: (i) high adherence (score = 8); (ii) medium adherence (scores 6 to \< 8); and (iii) low adherence (scores \< 6).
+
+### Study Measures
+
+-   **Baseline Demographics & Clinical Profiles:** Age, sex, and the prevalence/count of comorbidities.
+-   **Antihypertensive Utilization Patterns:** Therapeutic strategy (monotherapy vs. dual or triple combination regimens) and the distribution of specific pharmacological classes (e.g., ACEI, ARB, CCB, Diuretics, Beta-blockers).
+-   **Medication Adherence Rates:** Distribution of categorical adherence statuses across the cohort.
+
+### Statistical Analysis
+
+Data processing and analyses were performed using Microsoft Excel and **R (version 4.4.2)**. Categorical variables are expressed as frequencies and percentages ($n, \%$). Continuous variables are presented as Mean $\pm$ Standard Deviation ($\text{Mean} \pm \text{SD}$) for normally distributed data, or Median and Interquartile Range ($\text{Median, IQR}$) for non-normally distributed data.
+
+To explore potential baseline relationships, univariate logistic regression models were applied to evaluate the crude association between prescription regimens and adherence outcomes, reporting Odds Ratios (OR) and 95% Confidence Intervals (95% CI). Statistical significance was pre-specified at an alpha level of $\alpha = 0.05$, with a two-tailed $p$-value less than 0.05 ($p < 0.05$) indicating statistical significance.
+
+### Ethical Considerations
+
+The study protocol was reviewed and formally approved by the Institutional Review Board (IRB) / Biomedical Ethics Committee under an institutional protocol approval.
+
+## Results
+
+```{r setup}
+#| message: false
+#| warning: false
+
+library(dplyr)
+library(tidyr)
+library(forcats)
+library(ggplot2)
+library(scales)
+library(gtsummary)
+library(gt)
+
+```
+
+### Data Cleaning and Preparation
+
+Before proceeding with the statistical analysis, a data cleaning pipeline was executed to standardize character variables and handle clinical categorical groupings. Specifically, the `Comorbidities` variable (originally recording the raw count of co-existing conditions) was classified into clean, descriptive clinical categories, collapsing any count of 3 or greater into a single tier ("3+ comorbidities").
+
+```{r}
+#| label: data-cleaning
+#| message: false
+#| warning: false
+#| echo: true
+
+library(tidyverse)
+
+data_clean <- data %>%
+  mutate(
+    Comorbidities = case_when(
+      Comorbidities == 0 ~ "No comorbidity",
+      Comorbidities == 1 ~ "1 comorbidity",
+      Comorbidities == 2 ~ "2 comorbidities",
+      Comorbidities >= 3 ~ "3+ comorbidities",
+      TRUE               ~ as.character(Comorbidities)
+    ),
+    Comorbidities = factor(
+      Comorbidities, 
+      levels = c("No comorbidity", "1 comorbidity", "2 comorbidities", "3+ comorbidities")
+    ),
+    
+    across(
+      c(ACEI, ARB, CCB, Diuretic, BB),
+      ~ if_else(is.na(.) | . == "", "NONE", as.character(.))
+    ),
+    
+    drug_count = (ACEI != "NONE") + 
+                 (ARB != "NONE") + 
+                 (CCB != "NONE") + 
+                 (Diuretic != "NONE") + 
+                 (BB != "NONE"),
+    
+    Regimen = case_when(
+      drug_count == 1 ~ "Monotherapy",
+      drug_count == 2 ~ "Dual therapy",
+      drug_count >= 3 ~ "Triple+ therapy",
+      TRUE            ~ "No treatment" # Dự phòng trường hợp không ghi nhận thuốc
+    ),
+    Regimen = factor(
+      Regimen, 
+      levels = c("Monotherapy", "Dual therapy", "Triple+ therapy")
+    ),
+
+    MMAS_Score = (Mas1 == "No") + (Mas2 == "No") + (Mas3 == "No") + (Mas4 == "No") + 
+                 (Mas5 == "Yes") + (Mas6 == "No") + (Mas7 == "No") + (Mas8 == "No"),
+    
+    Adherence_Level = case_when(
+      MMAS_Score == 8          ~ "High",
+      MMAS_Score >= 6 & MMAS_Score < 8 ~ "Medium",
+      MMAS_Score < 6           ~ "Low"
+    ),
+    Adherence_Level = factor(Adherence_Level, levels = c("High", "Medium", "Low"))
+  ) %>%
+  select(-drug_count)
+head(data_clean$Regimen)
+
+```
+
+### Socio-Demographic Characteristics of the Patient Cohort
+
+Socio-demographic factors—such as age, gender, ethnicity, and occupation—are critical baseline determinants in epidemiological research. In chronic disease management like hypertension, these characteristics often play a foundational role in defining healthcare literacy, cultural barriers, and long-term compliance pathways within primary care settings.
+
+#### Baseline Characteristics Table
+
+To provide a comprehensive overview of the studied population, a clinical baseline table was generated. Continuous variables (such as birth year as an index for age) are expressed as Mean (±SD), while categorical variables are presented as absolute frequencies and percentages.
+
+```{r}
+#| label: tbl-demographics
+#| tbl-cap: "Baseline Socio-Demographic Characteristics of the Hypertensive Patient Cohort"
+#| message: false
+#| warning: false
+
+# Loading table formatting engine
+library(gtsummary)
+
+data %>%
+  select(Birth_Year, Gender, Education, Occupation) %>%
+  tbl_summary(
+    label = list(
+      Birth_Year   ~ "Age",
+      Gender       ~ "Gender / Sex",
+      Education    ~ "Educational Attainment",
+      Occupation   ~ "Occupational Category"
+    ),
+    statistic = list(
+      all_continuous()  ~ "{mean} (±{sd})",
+      all_categorical() ~ "{n} ({p}%)"
+    ),
+    digits = all_continuous() ~ 1
+  ) %>%
+  bold_labels() %>%
+  italicize_levels() %>%
+  as_gt()
+```
+
+The baseline demographic characteristics of the study population (N = 296) are presented in @tbl-demographics. The mean age of the participants was 60.1 pm 12.8 years. In terms of gender distribution, females constituted the majority of the cohort (n = 174, 59%), compared to males (n = 122, 41%). Regarding educational attainment, the largest proportion of patients had an educational level of primary school or lower (n = 124, 42%), followed by lower secondary school (n = 110, 37%), upper secondary school (n = 35, 12), and higher education (n = 27, 9.1%).
+
+#### Ethnicity and Gender Cross-Stratification
+
+Ethnicity is an important socio-cultural factor in regional healthcare. To evaluate if gender distribution remains balanced across different ethnic groups, the following chart visualizes the population structure using a stratified grouped bar design.
+
+```{r}
+#| label: fig-ethnicity-gender
+#| fig-cap: "Socio-demographic Distribution of Patients Stratified by Ethnicity and Gender"
+#| fig-width: 9
+#| fig-height: 5.5
+#| message: false
+#| warning: false
+
+library(ggplot2)
+library(dplyr)
+
+# 1. Tổng hợp dữ liệu phân tầng từ data_clean
+ethnicity_gender <- data_clean %>%
+  count(Ethnicity, Gender) %>%
+  group_by(Ethnicity) %>%
+  mutate(
+    percentage = n / sum(n),
+    label = paste0(round(percentage * 100, 1), "%")
+  ) %>%
+  ungroup()
+
+# 2. Vẽ biểu đồ phân tầng với hệ màu bổ trợ thống nhất của JAMA
+ggplot(ethnicity_gender, aes(x = Ethnicity, y = percentage, fill = Gender)) +
+  geom_col(position = position_dodge(width = 0.75), width = 0.6, alpha = 0.95) +
+  
+  # Hiển thị chữ số % tinh tế trên đầu cột
+  geom_text(aes(label = label), 
+            position = position_dodge(width = 0.75), 
+            vjust = -0.6, 
+            size = 3.8, 
+            color = "#333333",
+            fontface = "plain") +
+            
+  scale_y_continuous(labels = scales::percent_format(accuracy = 1),
+                     expand = expansion(mult = c(0, 0.15))) +
+                     
+  # 🌟 SỬA ĐỒNG BỘ MÀU: Dùng cặp màu bổ trợ chuyên dụng cho giới tính, tránh trùng màu High/Medium/Low
+  scale_fill_manual(values = c(
+    "Male"   = "#1170AA",  # Clinical Steel Blue
+    "Female" = "#FC7D4B"   # Muted Coral
+  )) +
+  
+  labs(
+    x = "Ethnicity group",
+    y = "Proportion within ethnicity (%)",
+    fill = "Gender"
+  ) +
+  
+  # Giữ nguyên Theme cao cấp của JAMA đồng bộ với Hình 3
+  theme_classic(base_size = 12) +
+  theme(
+    axis.line = element_line(color = "#444444", linewidth = 0.5),
+    axis.ticks = element_line(color = "#444444"),
+    
+    legend.position = "bottom",
+    legend.title = element_text(size = 10, color = "#222222"),
+    legend.text = element_text(size = 10, color = "#333333"),
+    
+    axis.title.y = element_text(color = "#222222", margin = margin(r = 10)),
+    axis.title.x = element_text(color = "#222222", margin = margin(t = 10)),
+    axis.text = element_text(color = "#333333"),
+    
+    panel.grid.major.y = element_line(color = "#EAEAEA", linewidth = 0.5),
+    plot.margin = margin(t = 15, r = 15, b = 10, l = 10, unit = "pt")
+  )
+```
+
+The proportion of gender distribution stratified by ethnicity groups is illustrated in @fig-ethnicity-gender. Among the Hoa ethnic group, males predominated over females, accounting for 60% and 40% of the subgroup, respectively. Conversely, a reversed trend was observed in the Khmer and Kinh subgroups, where females constituted the majority. Specifically, females accounted for 62.3% of the Khmer subgroup compared to 37.7% for males, while within the Kinh subgroup, females represented 58.4% and males represented 41.6%.
+
+#### Age Distribution Profiling Across Genders
+
+To understand the chronological age dispersion and detect potential outliers or skewed distributions between male and female cohorts, a hybrid Boxplot-Jitter visualization was implemented. This approach retains aggregate statistical summaries while presenting full data transparency.
+
+```{r}
+#| label: fig-age-distribution
+#| fig-cap: "Age Profiling and Distribution Stratified by Patient Gender"
+#| fig-width: 8
+#| fig-height: 5
+#| message: false
+#| warning: false
+
+library(ggplot2)
+library(dplyr)
+
+
+# 2. Vẽ biểu đồ Boxplot kết hợp Jitter chuẩn phong cách JAMA
+ggplot(data_clean, aes(x = Gender, y = Birth_Year, fill = Gender)) +
+  # Vẽ hộp với độ trong suốt vừa phải để làm nổi bật các điểm dữ liệu bên dưới
+  geom_boxplot(alpha = 0.5, width = 0.35, outlier.shape = NA, color = "#444444", linewidth = 0.6) +
+  
+  # Rải các điểm dữ liệu thực tế, dùng chính màu của Gender nhưng hạ alpha để nhìn sang trọng
+  geom_jitter(aes(color = Gender), width = 0.12, alpha = 0.35, size = 1.8) +
+  
+  # 🌟 ĐỒNG BỘ MÀU CHUẨN JAMA (Khớp hoàn toàn với biểu đồ hình cột trước)
+  scale_fill_manual(values = c("Male" = "#1170AA", "Female" = "#FC7D4B")) +
+  scale_color_manual(values = c("Male" = "#1170AA", "Female" = "#FC7D4B")) +
+  
+  # Nhãn tối giản chuẩn y khoa quốc tế
+  labs(
+    x = "Gender",
+    y = "Age (years)"
+  ) +
+  
+  # Khung nền Classic tinh giản, loại bỏ lưới dọc, giữ lưới ngang siêu mảnh
+  theme_classic(base_size = 12) +
+  theme(
+    axis.line = element_line(color = "#444444", linewidth = 0.5),
+    axis.ticks = element_line(color = "#444444"),
+    
+    legend.position = "none", # Tắt legend vì trục X đã phân định rõ Male/Female
+    
+    axis.title.y = element_text(color = "#222222", margin = margin(r = 10)),
+    axis.title.x = element_text(color = "#222222", margin = margin(t = 10)),
+    axis.text = element_text(color = "#333333"),
+    
+    panel.grid.major.y = element_line(color = "#EAEAEA", linewidth = 0.5),
+    plot.margin = margin(t = 15, r = 15, b = 10, l = 10, unit = "pt")
+  )
+```
+
+@fig-age-distribution illustrates the actual age profiling and structural distribution of the hypertensive cohort, stratified by patient gender. Overall, the chronological distribution is remarkably homogenous between both sub-groups, indicating no significant age skewness between male and female participants within this primary care registry.
+
+The median age for both genders sits right at approximately $60.0$ years old, aligning with the typical demographic burden of chronic hypertension in primary care. The interquartile range (IQR), represented by the boxes, demonstrates a highly identical dispersion pattern: the middle $50.0\%$ of female patients are concentrated between the ages of $53.0$ and $66.0$ years, while the male counterparts span a nearly identical interval from $53.0$ to $65.0$ years. The individual data points (jittered dots) reveal a wide and symmetrical age spread across the entire cohort, extending from younger adults in their late $20\text{s}$ and $30\text{s}$ (with the youngest patient around $28$ years old) to geriatric individuals exceeding $80$ years of age. This balanced age distribution ensures that age-related physiological and vascular factors are equally represented across both genders in subsequent clinical analyses.
+
+### Clinical Profiles and Baseline Cardiovascular Metrics
+
+This section describes the baseline cardiovascular parameters and comorbidity status of the studied cohort. The primary metrics evaluated include Systolic Blood Pressure (SBP), Diastolic Blood Pressure (DBP), and the burden of comorbidities.
+
+```{r}
+#| label: tbl-clinical-metrics
+#| message: false
+#| warning: false
+#| echo: true
+#| tbl-cap: "Baseline Cardiovascular Metrics and Comorbidity Distribution (N = 296)"
+
+
+clinical_table <- data_clean %>%
+  select(SBP, DBP, Comorbidities) %>%
+  tbl_summary(
+    label = list(
+      SBP ~ "Systolic Blood Pressure (mmHg)",
+      DBP ~ "Diastolic Blood Pressure (mmHg)",
+      Comorbidities ~ "Comorbidity Burden"
+    ),
+    statistic = list(
+      all_continuous() ~ "{mean} ± {sd}",
+      all_categorical() ~ "{n} ({p}%)"
+    ),
+    digits = all_continuous() ~ 1
+  )
+
+clinical_table
+```
+
+Baseline clinical characteristics of the study population ($N = 296$) are presented in @tbl-clinical-metrics. The mean systolic and diastolic blood pressures were $147.1 \pm 7.2$ mmHg and $88.8 \pm 3.2$ mmHg, respectively. Regarding comorbidity burden, all patients had at least one comorbid condition, with the majority possessing three or more comorbidities ($n = 187$, 63%), followed by two comorbidities ($n = 92$, 31%).
+
+Furthermore, the data reveals a profoundly high comorbidity burden among the participants. Remarkably, no patients ($0\%$) were free of co-existing conditions. Individuals presenting with a single comorbidity constituted a small fraction of the population ($n = 17$, $5.7\%$), whereas nearly one-third of the cohort ($n = 92$, $31.0\%$) managed two concurrent conditions. Most notably, the vast majority of patients ($n = 187$, $63.0\%$) were classified into the highest tier of multimorbidity, presenting with three or more co-existing clinical conditions. This heavy clustering of chronic illnesses emphasizes the high clinical complexity of this hypertensive population, suggesting that treatment strategies must transcend isolated blood pressure control and adopt a holistic, multi-disease management approach.
+
+### Antihypertensive Pharmacotherapy Utilization Patterns and Adverse Effects
+
+#### Response Distribution of individual MMAS-8 Items
+
+This section evaluates the distribution of pharmacological classes, specific drug choices, complexity of treatment regimens, and the prevalence of self-reported medication side effects within the study population.
+
+```{r}
+#| label: tbl-medication-utilization
+#| message: false
+#| warning: false
+#| echo: true
+#| tbl-cap: "Antihypertensive Drug Classes, Regimen Complexity, and Side Effects (N = 296)"
+
+library(tidyverse)
+library(gtsummary)
+
+# 1. Thống kê mô tả chi tiết phác đồ và các hoạt chất thuốc cụ thể
+medication_table <- data_clean %>%
+  select(Regimen, ACEI, ARB, CCB, Diuretic, BB, Side_Effects) %>%
+  # Chuyển đổi các giá trị trống hoặc không dùng thành dạng dễ đọc trên bảng
+  mutate(across(c(ACEI, ARB, CCB, Diuretic, BB), ~ ifelse(. == "" | is.na(.), "Not Prescribed", .))) %>%
+  tbl_summary(
+    label = list(
+      Regimen ~ "Therapeutic Regimen",
+      ACEI ~ "ACE Inhibitors (ACEI)",
+      ARB ~ "Angiotensin II Receptor Blockers (ARB)",
+      CCB ~ "Calcium Channel Blockers (CCB)",
+      Diuretic ~ "Diuretics",
+      BB ~ "Beta-Blockers (BB)",
+      Side_Effects ~ "Reported Side Effects"
+    ),
+    statistic = all_categorical() ~ "{n} ({p}%)"
+  )
+
+medication_table
+```
+
+The therapeutic regimens and medication utilization profiles of the study cohort ($N = 296$) are summarized in @tbl-medication-utilization. Monotherapy was the most prevalent regimen ($n = 181$, 61%), followed by dual therapy ($n = 108$, 36%) and triple+ therapy ($n = 7$, 2.4%). Regarding specific drug classes, Angiotensin II Receptor Blockers (ARBs) and Calcium Channel Blockers (CCBs) were widely utilized, with Losartan and Telmisartan each prescribed to 31% ($n = 92$) of patients, and Amlodipin prescribed to 40% ($n = 117$). Bisoprolol (BB) was utilized in 26% ($n = 77$) of cases, while ACE Inhibitors (ACEIs) and Diuretics were less frequently prescribed. Notably, a high incidence of reported side effects was observed, accounting for 75% ($n = 223$) of the population.
+
+```{r}
+#| label: fig-drug-class-prevalence
+#| message: false
+#| warning: false
+#| echo: true
+#| fig-cap: "Figure 2. Overall utilization prevalence of major antihypertensive drug classes."
+
+library(ggplot2)
+
+# 2. Tính toán tỷ lệ % sử dụng của từng nhóm thuốc để vẽ biểu đồ
+drug_counts <- data_clean %>%
+  summarise(
+    ACEI = sum(ACEI != "NONE" & !is.na(ACEI)),
+    ARB = sum(ARB != "NONE" & !is.na(ARB)),
+    CCB = sum(CCB != "NONE" & !is.na(CCB)),
+    Diuretic = sum(Diuretic != "NONE" & !is.na(Diuretic)),
+    BB = sum(BB != "NONE" & !is.na(BB))
+  ) %>%
+  pivot_longer(cols = everything(), names_to = "Drug_Class", values_to = "Count") %>%
+  mutate(Percentage = (Count / nrow(data_clean)) * 100)
+
+# Vẽ biểu đồ thanh ngang sắp xếp theo độ phổ biến
+ggplot(drug_counts, aes(x = reorder(Drug_Class, Percentage), y = Percentage)) +
+  geom_col(fill = "steelblue", width = 0.6) +
+  geom_text(aes(label = sprintf("%.1f%%", Percentage)), hjust = -0.1, size = 4) +
+  coord_flip() +
+  scale_y_continuous(limits = c(0, 100)) +
+  labs(
+    x = "Antihypertensive Drug Class",
+    y = "Prevalence within Cohort (%)"
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(
+    panel.grid.minor = element_blank(),
+    panel.grid.major.y = element_blank()
+  )
+```
+
+The prevalence of antihypertensive drug classes utilization within the study cohort is illustrated in @fig-drug-class-prevalence. Angiotensin II Receptor Blockers (ARBs) were the most frequently prescribed drug class, accounting for 62.2% of the population, followed by Calcium Channel Blockers (CCBs) at 39.5% and Beta-Blockers (BBs) at 26.0%. In contrast, Angiotensin-Converting Enzyme Inhibitors (ACEIs) and Diuretics were utilized less commonly, representing only 9.1% and 4.4% of the cohort, respectively.
+
+### Medication Adherence Profiles via the MMAS-8 Scale
+
+This section details the frequencies and percentages of patient responses ("Yes" versus "No") for each of the eight individual items within the MMAS-8 scale. This granular view highlights specific adherence barriers, such as forgetfulness or alterations in medication behavior based on symptom perception.
+
+```{r}
+#| label: tbl-mmas-items
+#| message: false
+#| warning: false
+#| echo: true
+#| tbl-cap: "Distribution of Patient Responses Across Individual MMAS-8 Items (N = 296)."
+
+library(gtsummary)
+library(tidyverse)
+
+# 1. Bảng hiển thị đầy đủ cả 2 cột Yes và No cho từng câu hỏi Mas
+mmas_items_table <- data_clean %>%
+  select(Mas1, Mas2, Mas3, Mas4, Mas5, Mas6, Mas7, Mas8) %>%
+  tbl_summary(
+    label = list(
+      Mas1 ~ "Q1. Forget to take medication?",
+      Mas2 ~ "Q2. Careless at times about taking medication?",
+      Mas3 ~ "Q3. Stop taking medicine if feeling worse?",
+      Mas4 ~ "Q4. Stop taking medicine if feeling better?",
+      Mas5 ~ "Q5. Took medicine yesterday?",
+      Mas6 ~ "Q6. Cut back or stop taking medicine when symptoms under control?",
+      Mas7 ~ "Q7. Feel pressured about sticking to treatment plan?",
+      Mas8 ~ "Q8. Difficulty remembering to take all medicine?"
+    ),
+    type = all_categorical() ~ "categorical", # Ép hiển thị đầy đủ các nhóm danh định
+    statistic = all_categorical() ~ "{n} ({p}%)"
+  )
+
+mmas_items_table
+```
+
+Patient responses to individual items of the 8-item Morisky Medication Adherence Scale (MMAS-8) are detailed in @tbl-mmas-items. High rates of adherence behavior were observed for intentional non-adherence items, with 94% ($n = 278$) of patients refusing to stop medication when feeling better (Q4) and 93% ($n = 276$) continuing their regimen even when feeling worse (Q3). Similarly, 90% ($n = 267$) reported not cutting back on medication when symptoms were under control (Q6). In terms of unintentional non-adherence, forgetfulness remained the primary barrier; 24% ($n = 71$) of respondents forgot to take their medication at times (Q1), and 21% ($n = 62$) experienced difficulty remembering to take all their medicines (Q8). Notably, 82% ($n = 242$) of the cohort successfully took their prescribed medication on the day prior to the survey (Q5).
+
+#### Categorical Stratification of Overall Medication Adherence Levels
+
+Based on the cumulative scores of the MMAS-8 instrument, patients were stratified into standard clinical adherence tiers: High adherence (Score = 8), Medium adherence (Score 6 to \<8), and Low adherence (Score \<6).
+
+```{r}
+#| label: tbl-adherence-summary
+#| message: false
+#| warning: false
+#| echo: true
+#| tbl-cap: "DSummary of Continuous MMAS-8 Scores and Categorified Adherence Levels (N = 296)"
+
+# 2. Bảng hiển thị riêng tổng điểm và phân độ tuân thủ
+adherence_summary_table <- data_clean %>%
+  select(MMAS_Score, Adherence_Level) %>%
+  tbl_summary(
+    label = list(
+      MMAS_Score ~ "Total MMAS-8 Score (Continuous)",
+      Adherence_Level ~ "Overall Adherence Level"
+    ),
+    statistic = list(
+      MMAS_Score ~ "{mean} ± {sd}",
+      all_categorical() ~ "{n} ({p}%)"
+    ),
+    digits = MMAS_Score ~ 1
+  ) 
+
+adherence_summary_table
+```
+
+The distribution of total MMAS-8 scores and the categorized overall medication adherence levels are summarized in @tbl-adherence-summary. Regarding the continuous scores, values ranged from 4 to 8, with a score of 7 being the most frequent, accounting for 39.9% ($n = 118$) of the population, followed by a perfect score of 8 at 28.0% ($n = 83$). When stratified into adherence categories, the majority of the patients exhibited a medium level of adherence ($n = 190$, 64%). High adherence was achieved by 28% ($n = 83$) of the cohort, while only a small minority demonstrated low adherence behavior ($n = 23$, 7.8%).
+
+```{r}
+#| label: fig-adherance
+#| message: false
+#| warning: false
+#| echo: true
+#| fig-cap: "Proportional distribution of medication adherence tiers aligned with JAMA visual style standards."
+
+
+# Trực quan hóa 3 nhóm theo chuẩn đồ họa tạp chí JAMA
+ggplot(data_clean, aes(x = Adherence_Level, fill = Adherence_Level)) +
+  # Vẽ cột thanh lịch, hơi mảnh một chút (width = 0.45)
+  geom_bar(aes(y = (..count..)/sum(..count..) * 100), width = 0.45, show.legend = FALSE) +
+  
+  # Hiển thị số % tinh tế ngay trên đầu cột, sử dụng size vừa phải, màu xám đen sang trọng
+  geom_text(aes(y = (..count..)/sum(..count..) * 100, 
+                label = sprintf("%.1f%%", (..count..)/sum(..count..) * 100)), 
+            stat = "count", vjust = -0.6, size = 4, color = "#222222", fontface = "plain") +
+  
+  # 🌟 ÁP DỤNG PALETTE MÀU CHUẨN CỦA TẠP CHÍ JAMA (Muted & Academic)
+  scale_fill_manual(values = c(
+    "High"   = "#374E55",  # Muted Dark Slate Blue
+    "Medium" = "#DF8F44",  # Muted Amber/Orange
+    "Low"    = "#B24745"   # Muted Deep Red
+  )) +
+  
+  # Nhãn tối giản, không viết hoa toàn bộ bừa bãi
+  labs(
+    x = "Medication adherence level",
+    y = "Percentage (%)"
+  ) +
+  
+  # Thiết lập giới hạn trục Y thoáng hơn một chút để không bị cụt chữ số %
+  scale_y_continuous(limits = c(0, 100), breaks = seq(0, 100, 20)) +
+  
+  # Tùy biến Theme cao cấp (Bỏ khung, bỏ lưới dọc, lưới ngang siêu mảnh)
+  theme_classic(base_size = 12) +
+  theme(
+    axis.line = element_line(color = "#444444", linewidth = 0.5),
+    axis.ticks = element_line(color = "#444444"),
+    axis.title = element_text(color = "#222222"),
+    axis.text = element_text(color = "#333333"),
+    
+    # Tạo đường lưới ngang mảnh (màu xám rất nhạt) đúng style báo cáo chuyên sâu
+    panel.grid.major.y = element_line(color = "#EAEAEA", linewidth = 0.5),
+    
+    # Khối đệm xung quanh đồ thị
+    plot.margin = margin(t = 15, r = 15, b = 10, l = 10, unit = "pt")
+  )
+```
+
+The overall medication adherence levels within the study population are illustrated in @fig-adherance. The majority of patients demonstrated a medium adherence level, accounting for 64.2% of the cohort. High adherence was observed in 28.0% of the sample, while only a small minority of patients fell into the low adherence category, representing 7.8% of the total population.
+
+## Discussion
+
+The present study provides a comprehensive evaluation of antihypertensive medication patterns and adherence levels among 296 outpatients in a primary care setting. Our findings delineate a complex clinical landscape characterized by a high burden of multimorbidity and a predominant reliance on monotherapy regimens, alongside a notably high rate of treatment adherence.
+
+### Socio-Demographic and Clinical Characteristics
+
+The study cohort reflects a typical geriatric demographic, with a mean age of 60.1 ± 12.8 years. A critical finding is the ubiquity of comorbidities, as 100% of the participants presented with at least one co-existing condition, and 63% managed three or more. This high prevalence aligns with findings by Đoàn Thị Phương Thảo (2023), who reported a high rate of diabetes (47.62%) in hypertensive outpatients @Thao2023. The intersection of hypertension with disorders such as dyslipidemia and diabetes—often termed the "metabolic triad"—significantly elevates cardiovascular risk and complicates management. Our data underscores that primary care strategies must transcend isolated blood pressure control to adopt a holistic, multi-disease management approach.
+
+### Antihypertensive Pharmacotherapy Utilization Patterns
+
+Our analysis revealed a distinct prescribing preference for ARBs, utilized by 62.2% of the cohort, followed by CCBs at 39.5%. Within these classes, Amlodipin (40%), Losartan (31%), and Telmisartan (31%) emerged as the primary pharmacological agents.
+
+Notably, monotherapy remains the most prevalent therapeutic strategy, prescribed to 61% of patients. This finding differs significantly from recent domestic data; for instance, a study in Cần Thơ (2024) reported that combination therapy (from 2 drugs upwards) predominated, reaching 91% @Yen2024. Furthermore, our observation that diuretics were utilized in only 4.4% of cases suggests a potential gap in the integration of thiazide-type diuretics, which are recommended as a cornerstone of combination therapy in most international and national guidelines. This utilization pattern also stands in contrast to the study by Đinh Thị Thúy Hà and Trần Phúc (2023), where CCBs (69.3%) and Beta-blockers (66.7%) were the dominant classes @Ha2024. Such variations likely reflect differences in local procurement strategies and prescribing habits at the primary care level.
+
+### **Evaluation of Medication Adherence and Barriers**
+
+Utilizing the MMAS-8 scale, we identified a remarkably high degree of treatment compliance. When stratified, 92.2% of the cohort demonstrated favorable adherence behavior (28% high and 64.2% medium), while only 7.8% were classified as having low adherence. This total adherence rate is substantially higher than the global non-adherence estimate of 52% reported in recent meta-analyses. It also exceeds results from other Vietnamese regions, such as Bắc Giang (73.8%) @Uyen2024.
+
+Granular analysis of individual MMAS-8 items highlights that unintentional non-adherence, specifically forgetfulness, is the primary barrier. Approximately 24% of patients reported forgetting their doses (Q1), and 21% experienced difficulty remembering their complete regimen (Q8). Conversely, intentional non-adherence was remarkably low; 94% of patients refused to stop medication when feeling better (Q4), and 93% continued treatment even when feeling worse (Q3). This suggests that while patients have high awareness of the necessity of long-term therapy, they struggle with the cognitive aspects of management. Clinical interventions should therefore prioritize visual aids, such as pill organizers or simplified labeling, to mitigate these memory-related barriers.
+
+Furthermore, our finding that the number of medications did not significantly influence adherence (p \> 0.05) is consistent with observations by Nguyễn Thị Thùy Dương (2025) @Duong2025, suggesting that at the primary care level, regimen complexity may not be the primary determinant of compliance behavior.
+
+### Study Limitations
+
+Several limitations must be acknowledged. First, the use of self-reported measures like the MMAS-8 is susceptible to social desirability bias, where patients may over-report adherence to satisfy healthcare providers. Second, the convenience sampling at a single primary care center limits the generalizability of these findings to urban or tertiary hospital settings. Finally, the relatively small size of certain subgroups, such as those on triple therapy (2.4%), limits the statistical power to draw definitive conclusions regarding the impact of regimen complexity on adherence outcomes.

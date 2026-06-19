@@ -1,0 +1,9 @@
+/* Ép tất cả các tầng bọc văn bản của Bootstrap phải căn đều */
+body, p, main, .article, article, .cell-output-display, li, section {
+  text-align: justify !important;
+  text-justify: inter-word !important;
+}
+/* Ép tất cả các tên hình (chú thích hình) phải căn giữa */
+.figure-caption, figcaption, [id^="fig-"] p {
+  text-align: center !important;
+}
